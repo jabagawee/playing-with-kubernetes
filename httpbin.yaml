@@ -13,7 +13,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: 8000
+    targetPort: 8080
   selector:
     app: httpbin
 ---
@@ -31,9 +31,9 @@ spec:
     spec:
       containers:
       - name: httpbin
-        image: citizenstig/httpbin
+        image: kennethreitz/httpbin
         ports:
-        - containerPort: 8000
+        - containerPort: 8080
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
