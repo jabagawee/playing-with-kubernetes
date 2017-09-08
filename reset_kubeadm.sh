@@ -50,7 +50,7 @@ function setup_lego_acme_client() {
     kubectl create serviceaccount --namespace kube-lego kube-lego
     kubectl create clusterrolebinding kube-lego-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-lego:kube-lego
     kubectl apply -f https://raw.githubusercontent.com/jetstack/kube-lego/master/examples/nginx/lego/configmap.yaml
-    kubectl patch configmap --namespace kube-lego kube-lego -p '{"data":{"lego.email":"andrew@jabagawee.com"}}'
+    kubectl patch configmap --namespace kube-lego kube-lego -p '{"data":{"lego.email":"letsencrypt@jabagawee.com"}}'
     kubectl apply -f https://raw.githubusercontent.com/jetstack/kube-lego/master/examples/nginx/lego/deployment.yaml
     kubectl patch deploy --namespace kube-lego kube-lego -p '{"spec":{"template":{"spec":{"serviceAccountName":"kube-lego"}}}}'
 }
