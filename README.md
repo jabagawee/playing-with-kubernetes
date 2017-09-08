@@ -9,8 +9,9 @@ tricks that influenced how I wrote this bash scripts.
 ## Fresh Start
 
 If you ever needed a script to just repeatedly teardown and bring back up
-a full Kubernetes cluster, check out [reset_kubeadm.sh], which turns up
-a Kubernetes cluster via the instructions on [Using kubeadm to Create
+a full Kubernetes cluster, check out [reset_kubeadm.sh](reset_kubeadm.sh),
+which turns up a Kubernetes cluster via the instructions on [Using kubeadm to
+Create
 a Cluster](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/).
 
 I chose Flannel as the pod network and set up Let's Encrypt + nginx as an
