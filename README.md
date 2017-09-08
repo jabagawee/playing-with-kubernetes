@@ -17,7 +17,7 @@ a Cluster](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
 I chose Flannel as the pod network and set up Let's Encrypt + nginx as an
 [Ingress
 controller](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers)
-to back all future Ingress resources. You might note that I have hardcoded
+to back all future ingress resources. You might note that I have hardcoded
 cluster-admin role service accounts for them which is probably a security
 problem, but this is for my personal/fun box at home so I'm not too worried.
 
@@ -31,10 +31,14 @@ doombagoomba.com, my domain.
 
 This is the [sample guestbook
 application](https://kubernetes.io/docs/tutorials/stateless-application/guestbook/)
-on the Kubernetes documentation. I used it quite a bit to debug the ingress
-setup.
+on the Kubernetes documentation. i used it quite a bit to debug the ingress
+setup, and I added a handwritten ingress resource at
+[guestbook-ingress.yaml](guestbook-ingress.yaml).
 
 ### Httpbin
 
 This was put in because I wanted to try learning to write my own yaml instead
-of using one that someone else wrote.
+of using one that someone else wrote. It's a simple Kubernetes deployment
+around [httpbin](http://httpbin.org/) by
+[@kennethreitz](https://github.com/kennethreitz), along with exposure as
+a service and an ingress resource, all tucked safely away in its own namespace.
