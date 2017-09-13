@@ -36,14 +36,6 @@ up authentication, I just created an exposed service of type NodePort that
 allowed me to access the dashboard without any authentication. After we're
 done, be sure to turn it off.
 
-### Guestbook
-
-This is the [sample guestbook
-application](https://kubernetes.io/docs/tutorials/stateless-application/guestbook/)
-on the Kubernetes documentation. i used it quite a bit to debug the ingress
-setup, and I added a handwritten ingress resource at
-[guestbook-ingress.yaml](guestbook-ingress.yaml).
-
 ### Httpbin
 
 This was put in because I wanted to try learning to write my own yaml instead
