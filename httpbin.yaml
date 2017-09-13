@@ -9,7 +9,7 @@ metadata:
   name: httpbin
   namespace: httpbin
   labels:
-    app: redis
+    app: httpbin
 spec:
   ports:
   - port: 80
