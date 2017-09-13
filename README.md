@@ -24,13 +24,3 @@ problem, but this is for my personal/fun box at home so I'm not too worried.
 There's also a bunch of hardcoded values specific to me, like my email address
 for [Let's Encrypt](https://letsencrypt.org) or a reference to
 doombagoomba.com, my domain.
-
-## Examples
-
-### Httpbin
-
-This was put in because I wanted to try learning to write my own yaml instead
-of using one that someone else wrote. It's a simple Kubernetes deployment
-around [httpbin](http://httpbin.org/) by
-[@kennethreitz](https://github.com/kennethreitz), along with exposure as
-a service and an ingress resource, all tucked safely away in its own namespace.
