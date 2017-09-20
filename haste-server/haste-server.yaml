@@ -1,24 +1,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: hastebin
+  name: haste-server
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hastebin
-  namespace: hastebin
+  name: haste-server
+  namespace: haste-server
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: hastebin
+        app: haste-server
     spec:
       containers:
       # TODO: manage config.js inside the container with ConfigMaps
       # this will allow us to configure redis to be on another container
-      - name: hastebin
+      - name: haste-server
         image: jabagawee/haste-server
         ports:
         - containerPort: 7777
@@ -31,22 +31,22 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hastebin
-  namespace: hastebin
+  name: haste-server
+  namespace: haste-server
   labels:
-    app: hastebin
+    app: haste-server
 spec:
   ports:
   - port: 80
     targetPort: 7777
   selector:
-    app: hastebin
+    app: haste-server
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: hastebin
-  namespace: hastebin
+  name: haste-server
+  namespace: haste-server
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "nginx"
@@ -54,12 +54,12 @@ spec:
   tls:
   - hosts:
     - paste.doombagoomba.com
-    secretName: hastebin-tls
+    secretName: haste-server-tls
   rules:
   - host: paste.doombagoomba.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: hastebin
+          serviceName: haste-server
           servicePort: 80
