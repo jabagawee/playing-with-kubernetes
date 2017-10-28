@@ -3,9 +3,9 @@ FROM python:3-alpine
 ADD . /rasdoor
 WORKDIR /rasdoor
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir gunicorn
 
 EXPOSE 5000
 
-ENV FLASK_APP main.py
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app", "--access-logfile", "-", "--error-logfile", "-"]
