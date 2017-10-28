@@ -1,7 +1,12 @@
+#! /usr/bin/env python3
+
+import os
+
 from flask import Flask, abort, request
 app = Flask(__name__)
 
-VERIFY_TOKEN = 'temp_token_to_replace_with_secret'
+FACEBOOK_PAGE_ACCESS_TOKEN = os.getenv('FACEBOOK_PAGE_ACCESS_TOKEN')
+FACEBOOK_VERIFICATION_TOKEN = os.getenv('FACEBOOK_VERIFICATION_TOKEN')
 
 @app.route('/')
 def hello_world():
@@ -20,7 +25,7 @@ def facebook_webhook():
         mode = request.args.get('hub.mode')
         token = request.args.get('hub.verify_token')
         challenge = request.args.get('hub.challenge')
-        if mode == 'subscribe' and token == VERIFY_TOKEN:
+        if mode == 'subscribe' and token == FACEBOOK_VERIFICATION_TOKEN:
             return challenge
         abort(403)
 

@@ -20,6 +20,17 @@ spec:
         image: jabagawee/rasdoor
         ports:
         - containerPort: 5000
+        env:
+        - name: FACEBOOK_PAGE_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: rasdoor-facebook-secret
+              key: pageAccessToken
+        - name: FACEBOOK_VERIFICATION_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: rasdoor-facebook-secret
+              key: verificationToken
 ---
 apiVersion: v1
 kind: Service
