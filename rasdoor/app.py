@@ -18,6 +18,14 @@ def facebook_webhook():
         body = request.get_json()
         if body['object'] == 'page':
             for entry in body['entry']:
+                message = entry['messaging'][0]
+                if message['sender']['id'] == '1552580134821661':
+                    if message['message']['text'] == 'lock':
+                        print('Locking the August lock!')
+                        os.system('ssh -i /sshkeys/mountedpi/ssh-privatekey pi@mountedpi "python3 august.py lock"')
+                    elif message['message']['text'] == 'unlock':
+                        print('Unlocking the August lock!')
+                        os.system('ssh -i /sshkeys/mountedpi/ssh-privatekey pi@mountedpi "python3 august.py unlock"')
                 print(entry['messaging'][0])
             return 'EVENT_RECEIVED'
         abort(404)

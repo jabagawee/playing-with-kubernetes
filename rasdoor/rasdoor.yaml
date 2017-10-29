@@ -15,11 +15,19 @@ spec:
       labels:
         app: rasdoor
     spec:
+      volumes:
+      - name: mountedpi-ssh-keys
+        secret:
+          secretName: mountedpi-ssh-keys
       containers:
       - name: rasdoor
         image: jabagawee/rasdoor:latest
         ports:
         - containerPort: 5000
+        volumeMounts:
+          - name: mountedpi-ssh-keys
+            readOnly: true
+            mountPath: /sshkeys/mountedpi
         env:
         - name: FACEBOOK_PAGE_ACCESS_TOKEN
           valueFrom:
@@ -67,3 +75,26 @@ spec:
         backend:
           serviceName: rasdoor
           servicePort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mountedpi
+  namespace: rasdoor
+spec:
+  ports:
+    - protocol: TCP
+      port: 22
+      targetPort: 22
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: mountedpi
+  namespace: rasdoor
+subsets:
+  - addresses:
+      - ip: 192.168.0.10
+    ports:
+      - port: 22
+
