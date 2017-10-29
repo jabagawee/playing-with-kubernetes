@@ -4,7 +4,8 @@ ADD . /rasdoor
 WORKDIR /rasdoor
 
 RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir gunicorn
+    pip install --no-cache-dir gunicorn && \
+    apk add --update openssh-client
 
 EXPOSE 5000
 

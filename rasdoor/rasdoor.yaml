@@ -32,12 +32,12 @@ spec:
         - name: FACEBOOK_PAGE_ACCESS_TOKEN
           valueFrom:
             secretKeyRef:
-              name: rasdoor-facebook-secret
+              name: facebook-tokens
               key: pageAccessToken
         - name: FACEBOOK_VERIFICATION_TOKEN
           valueFrom:
             secretKeyRef:
-              name: rasdoor-facebook-secret
+              name: facebook-tokens
               key: verificationToken
 ---
 apiVersion: v1
