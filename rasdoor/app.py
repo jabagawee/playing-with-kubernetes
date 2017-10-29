@@ -22,10 +22,10 @@ def facebook_webhook():
                 if message['sender']['id'] == '1552580134821661':
                     if message['message']['text'] == 'lock':
                         print('Locking the August lock!')
-                        os.system('ssh -i /sshkeys/mountedpi/ssh-privatekey pi@mountedpi "python3 august.py lock"')
+                        os.system('ssh -o StrictHostKeyChecking=no -i /sshkeys/mountedpi/ssh-privatekey pi@mountedpi "python3 august.py lock"')
                     elif message['message']['text'] == 'unlock':
                         print('Unlocking the August lock!')
-                        os.system('ssh -i /sshkeys/mountedpi/ssh-privatekey pi@mountedpi "python3 august.py unlock"')
+                        os.system('ssh -o StrictHostKeyChecking=no -i /sshkeys/mountedpi/ssh-privatekey pi@mountedpi "python3 august.py unlock"')
                 print(entry['messaging'][0])
             return 'EVENT_RECEIVED'
         abort(404)
