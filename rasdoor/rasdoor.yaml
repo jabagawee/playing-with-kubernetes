@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: rasdoor
-        image: jabagawee/rasdoor
+        image: jabagawee/rasdoor:latest
         ports:
         - containerPort: 5000
         env:
