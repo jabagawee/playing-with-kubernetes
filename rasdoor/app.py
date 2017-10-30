@@ -31,7 +31,10 @@ def privacy_policy():
 @app.route('/webhook/facebook_messenger', methods=['GET', 'POST'])
 def facebook_webhook():
     if request.method == 'POST':
-        if not verify_facebook_signature(request.get_data(), request.headers.get('X-Hub-Signature')):
+        try:
+            if not verify_facebook_signature(request.get_data(), request.headers.get('X-Hub-Signature')):
+                abort(403)
+        except:
             abort(403)
         body = request.get_json()
         if body['object'] == 'page':
@@ -68,7 +71,8 @@ def unlock_front():
     _run_command_on_pi('python opendoor.py')
 
 def verify_facebook_signature(payload, expected_signature):
-    calculated_signature = hmac.new(FACEBOOK_APP_SECRET, payload, hashlib.sha1).hexdigest()
+    key = bytes(FACEBOOK_APP_SECRET, 'utf-8')
+    calculated_signature = hmac.new(key, payload, hashlib.sha1).hexdigest()
     return f'sha1={calculated_signature}' == expected_signature
 
 if __name__ == '__main__':
