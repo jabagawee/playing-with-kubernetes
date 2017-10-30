@@ -49,10 +49,11 @@ def facebook_webhook():
                 print(message)
                 sender_id = message['sender']['id']
                 if sender_id in FACEBOOK_AUTHORIZED_SENDER_IDS:
-                    if message['message']['text'] == 'lock':
+                    message_text = message['message']['text'].lower()
+                    if message_text == 'lock':
                         lock_august()
                         send_facebook_message(sender_id, 'Door locked.')
-                    elif message['message']['text'] == 'unlock':
+                    elif message_text == 'unlock':
                         unlock_august()
                         unlock_front()
                         send_facebook_message(sender_id, 'Door unlocked.')
