@@ -5,6 +5,7 @@ import os
 from flask import Flask, abort, request
 app = Flask(__name__)
 
+FACEBOOK_APP_SECRET = os.getenv('FACEBOOK_APP_SECRET')
 FACEBOOK_PAGE_ACCESS_TOKEN = os.getenv('FACEBOOK_PAGE_ACCESS_TOKEN')
 FACEBOOK_VERIFICATION_TOKEN = os.getenv('FACEBOOK_VERIFICATION_TOKEN')
 
@@ -28,6 +29,9 @@ def privacy_policy():
 @app.route('/webhook/facebook_messenger', methods=['GET', 'POST'])
 def facebook_webhook():
     if request.method == 'POST':
+        raw_data = request.get_data()
+        print('raw_data =', raw_data)
+        print('X-Hub-Signature =', request.headers.get('X-Hub-Signature'))
         body = request.get_json()
         if body['object'] == 'page':
             for entry in body['entry']:

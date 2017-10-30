@@ -30,6 +30,11 @@ spec:
             readOnly: true
             mountPath: /sshkeys/mountedpi
         env:
+        - name: FACEBOOK_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: facebook-tokens
+              key: appSecret
         - name: FACEBOOK_PAGE_ACCESS_TOKEN
           valueFrom:
             secretKeyRef:
