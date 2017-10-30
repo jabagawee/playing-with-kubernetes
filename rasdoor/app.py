@@ -60,7 +60,7 @@ def unlock_august():
     _run_command_on_pi('python3 august.py unlock')
 
 def unlock_front():
-    _run_command_on_pi('python3 opendoor.py')
+    _run_command_on_pi('python opendoor.py')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
