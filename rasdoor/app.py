@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+import hashlib
+import hmac
 import os
 
 from flask import Flask, abort, request
