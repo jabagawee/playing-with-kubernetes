@@ -38,7 +38,6 @@ def facebook_webhook():
                         lock_august()
                     elif message['message']['text'] == 'unlock':
                         unlock_august()
-                    elif message['message']['text'] == 'front':
                         unlock_front()
                 print(message)
             return 'EVENT_RECEIVED'
