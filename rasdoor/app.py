@@ -5,11 +5,15 @@ import hmac
 import os
 
 from flask import Flask, abort, request
+import requests
+
 app = Flask(__name__)
 
 FACEBOOK_APP_SECRET = os.getenv('FACEBOOK_APP_SECRET')
 FACEBOOK_PAGE_ACCESS_TOKEN = os.getenv('FACEBOOK_PAGE_ACCESS_TOKEN')
 FACEBOOK_VERIFICATION_TOKEN = os.getenv('FACEBOOK_VERIFICATION_TOKEN')
+
+FACEBOOK_MESSAGE_URL = 'https://graph.facebook.com/v2.6/me/messages'
 
 FACEBOOK_AUTHORIZED_SENDER_IDS = set([
     '1552580134821661',  # Szeto
@@ -42,13 +46,16 @@ def facebook_webhook():
             for entry in body['entry']:
                 # facebook docs say that one entry will always have only one message
                 message = entry['messaging'][0]
-                if message['sender']['id'] in FACEBOOK_AUTHORIZED_SENDER_IDS:
+                print(message)
+                sender_id = message['sender']['id']
+                if sender_id in FACEBOOK_AUTHORIZED_SENDER_IDS:
                     if message['message']['text'] == 'lock':
                         lock_august()
+                        send_facebook_message(sender_id, 'Door locked.')
                     elif message['message']['text'] == 'unlock':
                         unlock_august()
                         unlock_front()
-                print(message)
+                        send_facebook_message(sender_id, 'Door unlocked.')
             return 'EVENT_RECEIVED'
         abort(404)
     else:
@@ -75,6 +82,20 @@ def verify_facebook_signature(payload, expected_signature):
     key = bytes(FACEBOOK_APP_SECRET, 'utf-8')
     calculated_signature = hmac.new(key, payload, hashlib.sha1).hexdigest()
     return f'sha1={calculated_signature}' == expected_signature
+
+def send_facebook_message(recipient_id, message):
+    params = {
+        'access_token': FACEBOOK_PAGE_ACCESS_TOKEN,
+    }
+    payload = {
+        'recipient': {
+            'id': recipient_id,
+        },
+        'message': {
+            'text': message,
+        },
+    }
+    requests.post(FACEBOOK_MESSAGE_URL, data=payload)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
