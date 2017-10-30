@@ -95,7 +95,7 @@ def send_facebook_message(recipient_id, message):
             'text': message,
         },
     }
-    requests.post(FACEBOOK_MESSAGE_URL, params=params, data=payload)
+    requests.post(FACEBOOK_MESSAGE_URL, params=params, json=payload)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
