@@ -48,15 +48,18 @@ def facebook_webhook():
                 message = entry['messaging'][0]
                 print(message)
                 sender_id = message['sender']['id']
-                if sender_id in FACEBOOK_AUTHORIZED_SENDER_IDS:
-                    message_text = message['message']['text'].lower()
-                    if message_text == 'lock':
+                message_text = message['message']['text'].lower()
+                if message_text == 'lock':
+                    if sender_id in FACEBOOK_AUTHORIZED_SENDER_IDS:
                         lock_august()
-                        send_facebook_message(sender_id, 'Door locked.')
-                    elif message_text == 'unlock':
+                    send_facebook_message(sender_id, 'Door locked.')
+                elif message_text == 'unlock':
+                    if sender_id in FACEBOOK_AUTHORIZED_SENDER_IDS:
                         unlock_august()
                         unlock_front()
-                        send_facebook_message(sender_id, 'Door unlocked.')
+                    send_facebook_message(sender_id, 'Door unlocked.')
+                else:
+                    send_facebook_message(sender_id, 'Unrecognized command.')
             return 'EVENT_RECEIVED'
         abort(404)
     else:
